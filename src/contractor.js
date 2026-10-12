@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('dog_image', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/verify-dog', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${API_BASE}/api/verify-dog`, {
         method: 'POST',
         body: formData
       });
@@ -171,7 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
     auditBtn.querySelector('.btn-text').textContent = "CHECKING DISTANCE...";
 
     try {
-      const response = await fetch('http://localhost:5000/api/audit-release', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${API_BASE}/api/audit-release`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -188,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultBox.innerHTML = `⚠ ${data.system_message}`;
       }
     } catch (err) {
-      alert(`Network Error: Ensure your Node.js API is running on Port 5000. Detail: ${err.message}`);
+      alert(`Network Error: Ensure your Node.js API is running. Detail: ${err.message}`);
     } finally {
       auditBtn.querySelector('.btn-text').textContent = "VERIFY DROP-OFF DISTANCE";
     }
