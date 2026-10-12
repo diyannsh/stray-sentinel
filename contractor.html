@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contractor Audit Dashboard | Stray Sentinel</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="portal-body">
+    <!-- Interactive Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
+
+    <!-- WebGL Background Canvas -->
+    <canvas id="dashboard-canvas"></canvas>
+
+    <!-- Cyber HUD Frame -->
+    <div class="hud-overlay">
+      <div class="hud-grid"></div>
+      <div class="scan-line"></div>
+      <div class="hud-tag top-left">
+        <span class="pulse-marker"></span> SENTINEL_AUDIT_NODE // SECURE
+      </div>
+      <div class="hud-tag top-right">UPLINK: ACTIVE // GEO_TRACKING_ON</div>
+    </div>
+
+    <!-- Dashboard Interface -->
+    <!-- Dashboard Interface -->
+    <main class="portal-wrapper">
+      <div class="portal-card">
+        <div class="card-corner top-l"></div>
+        <div class="card-corner top-r"></div>
+        <div class="card-corner bot-l"></div>
+        <div class="card-corner bot-r"></div>
+
+        <a href="/" class="back-link" data-hover="pointer">
+          <span class="back-arrow">←</span> RETURN TO HOME
+        </a>
+
+        <div class="portal-intro">
+          <span class="terminal-badge">CONTRACTOR DASHBOARD</span>
+          <h1 class="portal-title">DROP-OFF <span>CHECK</span></h1>
+          <p class="portal-subtitle">
+            Make sure the dog is being safely returned to its original
+            neighborhood. If the drop-off point is more than 500 meters from
+            where it was picked up, the release will be flagged.
+          </p>
+        </div>
+
+        <div class="audit-grid">
+          <!-- 1. Biometric Scan -->
+          <div class="hud-box" style="grid-column: 1 / -1">
+            <span class="hud-box-label">1. IDENTIFY DOG (BIOMETRIC SCAN)</span>
+            <div style="display: flex; gap: 1rem; align-items: stretch">
+              <input
+                type="file"
+                id="dog-image-input"
+                accept="image/*"
+                capture="environment"
+                hidden
+              />
+              <button
+                id="scan-photo-btn"
+                class="cyber-btn"
+                data-hover="pointer"
+                style="padding: 0 2rem; white-space: nowrap"
+              >
+                [O] TAKE OR UPLOAD PHOTO
+              </button>
+              <input
+                type="text"
+                id="detected-id"
+                class="cyber-input"
+                readonly
+                placeholder="AI Detected ID will appear here..."
+                style="flex-grow: 1; opacity: 0.8"
+              />
+            </div>
+          </div>
+
+          <!-- 2. Capture Coordinates (Auto-Filled & Locked) -->
+          <div class="hud-box">
+            <span class="hud-box-label">2. ORIGINAL PICK-UP (LOCKED)</span>
+            <div class="form-group">
+              <label>LATITUDE</label>
+              <input
+                type="number"
+                id="cap-lat"
+                class="cyber-input"
+                readonly
+                placeholder="Waiting for ID..."
+                style="opacity: 0.7"
+              />
+            </div>
+            <div class="form-group">
+              <label>LONGITUDE</label>
+              <input
+                type="number"
+                id="cap-lng"
+                class="cyber-input"
+                readonly
+                placeholder="Waiting for ID..."
+                style="opacity: 0.7"
+              />
+            </div>
+          </div>
+
+          <!-- 3. Release Coordinates -->
+          <div class="hud-box">
+            <span class="hud-box-label">3. CURRENT DROP-OFF LOCATION</span>
+            <div class="form-group">
+              <label>LATITUDE</label>
+              <input
+                type="number"
+                id="rel-lat"
+                class="cyber-input"
+                step="any"
+                placeholder="Awaiting Signal..."
+              />
+            </div>
+            <div class="form-group">
+              <label>LONGITUDE</label>
+              <input
+                type="number"
+                id="rel-lng"
+                class="cyber-input"
+                step="any"
+                placeholder="Awaiting Signal..."
+              />
+            </div>
+            <button
+              id="gps-btn"
+              class="cyber-link-btn mt-2"
+              data-hover="pointer"
+            >
+              [ 📡 GET MY CURRENT LOCATION ]
+            </button>
+          </div>
+        </div>
+
+        <button
+          id="audit-btn"
+          class="cyber-btn full-width mt-4"
+          data-hover="pointer"
+        >
+          <span class="btn-grid"></span>
+          <span class="btn-text">VERIFY DROP-OFF DISTANCE</span>
+        </button>
+
+        <!-- Audit Results Panel -->
+        <div
+          id="audit-result"
+          class="audit-result-panel"
+          style="display: none"
+        ></div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/contractor.js"></script>
+  </body>
+</html>

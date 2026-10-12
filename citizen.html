@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Dog Status | Stray Sentinel</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="portal-body">
+    <!-- Interactive Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
+
+    <!-- WebGL Background Canvas -->
+    <canvas id="citizen-canvas"></canvas>
+
+    <!-- Cyber HUD Frame -->
+    <div class="hud-overlay">
+      <div class="hud-grid"></div>
+      <div class="scan-line"></div>
+      <div class="hud-tag top-left">
+        <span class="pulse-marker"></span> SYSTEM // ONLINE
+      </div>
+      <div class="hud-tag top-right">CAMERA // SECURE</div>
+      <div class="hud-tag bottom-left">DATABASE // CONNECTED</div>
+      <div class="hud-tag bottom-right">LATENCY: 14ms // TLS_v1.3</div>
+    </div>
+
+    <!-- Main Portal Interface -->
+    <main class="portal-wrapper">
+      <div class="portal-card">
+        <div class="card-corner top-l"></div>
+        <div class="card-corner top-r"></div>
+        <div class="card-corner bot-l"></div>
+        <div class="card-corner bot-r"></div>
+
+        <a href="/" class="back-link" data-hover="pointer">
+          <span class="back-arrow">←</span> RETURN TO HOME
+        </a>
+
+        <div class="portal-intro">
+          <span class="terminal-badge">CITIZEN PORTAL</span>
+          <h1 class="portal-title">STRAY DOG <span>SCANNER</span></h1>
+          <p class="portal-subtitle">
+            Take or upload a clear photo of a stray dog's face. Our AI will scan
+            its features to check the city database for its vaccination and
+            sterilization records.
+          </p>
+        </div>
+
+        <!-- UPLOAD VIEW -->
+        <div id="upload-panel" class="upload-zone" data-hover="pointer">
+          <input type="file" id="file-input" accept="image/*" hidden />
+          <div class="upload-graphics">
+            <div class="reticle"></div>
+            <div class="upload-icon">⤓</div>
+          </div>
+          <div class="upload-prompt">
+            <strong>CLICK TO SELECT</strong> OR DROP PHOTO HERE
+          </div>
+          <p class="upload-subtext">JPG or PNG (Clear lighting works best!)</p>
+        </div>
+
+        <!-- SCANNING VIEW -->
+        <div id="scan-panel" class="scan-panel" style="display: none">
+          <div class="scanner-frame">
+            <img
+              id="preview-img"
+              src=""
+              alt="Subject Preview"
+              class="scanner-preview"
+            />
+            <div class="laser-scanner"></div>
+            <div class="target-marker tl"></div>
+            <div class="target-marker tr"></div>
+            <div class="target-marker bl"></div>
+            <div class="target-marker br"></div>
+          </div>
+          <div class="scan-telemetry">
+            <div class="telemetry-step active" id="step-1">
+              <span class="dot"></span> [1/3] UPLOADING SECURE IMAGE...
+            </div>
+            <div class="telemetry-step" id="step-2">
+              <span class="dot"></span> [2/3] AI SCANNING FACIAL FEATURES...
+            </div>
+            <div class="telemetry-step" id="step-3">
+              <span class="dot"></span> [3/3] SEARCHING CITY RECORDS FOR A
+              MATCH...
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTS VIEW -->
+        <div id="result-panel" class="result-panel" style="display: none">
+          <div class="result-header">
+            <div class="status-indicator">
+              <span class="status-pill verified" id="result-badge"
+                >STATUS: VERIFIED</span
+              >
+            </div>
+            <h3 id="result-id" class="result-id-tag">STRAY-0000-IND</h3>
+          </div>
+
+          <div class="result-grid">
+            <div class="hud-box">
+              <span class="hud-box-label">STERILIZATION STATUS</span>
+              <div class="hud-box-value" id="val-sterilization">STERILIZED</div>
+              <span class="hud-box-sub" id="val-contractor"
+                >VERIFIED BY CITY</span
+              >
+            </div>
+            <div class="hud-box">
+              <span class="hud-box-label">RABIES VACCINATION</span>
+              <div class="hud-box-value highlight" id="val-rabies">
+                CURRENT / PROTECTED
+              </div>
+              <span class="hud-box-sub" id="val-next-due">NEXT DUE: 2027</span>
+            </div>
+            <div class="hud-box">
+              <span class="hud-box-label">HOME TERRITORY</span>
+              <div class="hud-box-value" id="val-ward">ZONE-CENTRAL</div>
+              <span class="hud-box-sub" id="val-confidence"
+                >MATCH CONFIDENCE: 98.4%</span
+              >
+            </div>
+          </div>
+
+          <div class="raw-data-section">
+            <button id="toggle-raw" class="cyber-link-btn" data-hover="pointer">
+              [+] VIEW SYSTEM DATA
+            </button>
+            <pre id="raw-json" style="display: none"></pre>
+          </div>
+
+          <button id="reset-portal-btn" class="cyber-btn" data-hover="pointer">
+            <span class="btn-text">SCAN ANOTHER DOG</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/citizen.js"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stray Sentinel | Advanced Civic Verification Platform</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Premium Interactive Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
+
+    <!-- WebGL Rendering Workspace -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- UI Overlays & Cyber HUD Elements -->
+    <div class="hud-overlay">
+      <div class="hud-grid"></div>
+      <div class="scan-line"></div>
+      <div class="hud-tag top-left">
+        <span class="pulse-marker"></span> PROTOCOL // STRAY_SENTINEL_v2.0
+      </div>
+      <div class="hud-tag top-right">
+        GRID LOC: <span id="hud-lat">17.3850° N</span> //
+        <span id="hud-lng">78.4867° E</span>
+      </div>
+      <div class="hud-tag bottom-left">[ SYSTEM ACTIVE ] // BUFFER_SECURE</div>
+      <div class="hud-tag bottom-right">SYS_STATUS: AUDITING_REAL_TIME</div>
+    </div>
+
+    <!-- Main Content Stream (Smooth Scrolled) -->
+    <main id="smooth-wrapper">
+      <div id="smooth-content">
+        <!-- Main Entry Showcase -->
+        <section class="hero-showcase">
+          <div class="glitch-container">
+            <span class="ambient-num">01 // PRESTIGE CIVIL INTERACTION</span>
+            <h1 class="visual-title">STRAY <br /><span>SENTINEL</span></h1>
+            <p class="visual-description">
+              Defeating Stray Dog Management Fraud (Animal Birth Control)
+              through AI biometric identity verification and closed-loop
+              geospatial auditing.
+            </p>
+            <div class="cyber-btn-group">
+              <a
+                href="/citizen.html"
+                class="cyber-btn"
+                data-hover-type="interactive"
+              >
+                <span class="btn-grid"></span>
+                <span class="btn-text">CITIZEN PORTAL [Verify]</span>
+              </a>
+              <a
+                href="/contractor.html"
+                class="cyber-btn secondary"
+                data-hover-type="interactive"
+              >
+                <span class="btn-text">CONTRACTOR DASHBOARD [Audit]</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Mini Data Board (Awwwards Style) -->
+          <div class="hud-data-board">
+            <div class="metric">
+              <div class="metric-num" id="counter-fraud">0%</div>
+              <div class="metric-label">UNCERTIFIED LEAKS (AUDITED)</div>
+            </div>
+            <div class="metric">
+              <div class="metric-num">98.4%</div>
+              <div class="metric-label">DISPLACEMENT VERACITY RATE</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dynamic scroll block to showcase cinematic WebGL transitioning -->
+        <section class="visual-content-block">
+          <div class="section-indicator">
+            02 // GEOSPATIAL AUDITING VIEWPORTS
+          </div>
+          <h2 class="section-title">
+            TRACKING EVERY INDIVIDUAL <br />RELEASE POINT IN REAL-TIME
+          </h2>
+          <p class="section-para">
+            Every animal’s verification signature is cryptographically linked to
+            its native habitat point. Any deviation over 500 meters from the
+            source habitat instantly flags displacement alerts.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
