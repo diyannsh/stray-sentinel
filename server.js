@@ -70,11 +70,13 @@ app.post('/api/verify-dog', upload.single('dog_image'), async (req, res) => {
     const uploadedImageUrl = cloudRes.secure_url;
 
     // 2. Query Python AI Microservice (Port 8000)
-    const aiResponse = await fetch('http://127.0.0.1:8000/verify-dog', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image_url: uploadedImageUrl })
-    });
+    // 2. Query Python AI Microservice
+const pythonAiUrl = process.env.PYTHON_AI_URL || 'http://127.0.0.1:8000';
+const aiResponse = await fetch(`${pythonAiUrl}/verify-dog`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ image_url: uploadedImageUrl })
+});
 
     if (!aiResponse.ok) {
       throw new Error(`AI Microservice error: ${aiResponse.statusText}`);
