@@ -7,12 +7,17 @@ import uuid
 from pinecone import Pinecone
 import os
 from dotenv import load_dotenv
+from ultralytics import YOLO  # <-- NEW IMPORT
 
 # Load hidden variables
 load_dotenv()
+
 # Initialize Pinecone Memory safely
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index("stray-sentinel")
+
+# Load YOLO model globally so it downloads and boots only once
+yolo_model = YOLO('yolov8n.pt')  # <-- NEW MODEL INITIALIZATION
 
 app = FastAPI()
 
@@ -24,13 +29,28 @@ class ImageRequest(BaseModel):
 @app.post("/verify-dog")
 async def verify_dog(req: ImageRequest):
     try:
-        # 2. Download Image from Cloudinary
+        # 1. Download Image from Cloudinary
         resp = urllib.request.urlopen(req.image_url)
         image = np.asarray(bytearray(resp.read()), dtype="uint8")
         img = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
         if img is None:
             raise ValueError("Could not decode image from URL.")
+
+        # ==========================================
+        # 2. YOLOv8 GATEKEEPER (Dog vs. Not-Dog)
+        # ==========================================
+        results = yolo_model(img)
+        detected_classes = results[0].boxes.cls.tolist()
+
+        # COCO dataset class ID for 'dog' is 16.0
+        if 16.0 not in detected_classes:
+            # If no dog is found, throw an HTTP 400 error immediately
+            raise HTTPException(
+                status_code=400,
+                detail="No dog detected in the image. Please upload a valid photo of a dog."
+            )
+        # ==========================================
 
         # 3. OpenCV Processing (Extract 512 dimensions)
         img_resized = cv2.resize(img, (224, 224))
@@ -70,6 +90,9 @@ async def verify_dog(req: ImageRequest):
                 "confidence_score": 1.0
             }
 
+    except HTTPException as he:
+        # Pass the 400 gatekeeper error directly to the frontend
+        raise he
     except Exception as e:
         print(f"AI Pipeline Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

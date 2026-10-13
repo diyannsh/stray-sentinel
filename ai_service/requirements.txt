@@ -5,3 +5,6 @@ opencv-python-headless
 numpy
 pinecone
 python-dotenv
+ultralytics
+Pillow
+requests
