@@ -5,6 +5,6 @@ opencv-python-headless
 ultralytics
 fastapi
 uvicorn
-pinecone-client
+pinecone
 python-dotenv
 pydantic
