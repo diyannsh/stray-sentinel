@@ -1,10 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+opencv-python-headless
+ultralytics
 fastapi
 uvicorn
-pydantic
-opencv-python-headless
-numpy
-pinecone
+pinecone-client
 python-dotenv
-ultralytics
-Pillow
-requests
+pydantic
