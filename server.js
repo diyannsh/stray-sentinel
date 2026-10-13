@@ -79,8 +79,14 @@ const aiResponse = await fetch(`${pythonAiUrl}/verify-dog`, {
 });
 
     if (!aiResponse.ok) {
-      throw new Error(`AI Microservice error: ${aiResponse.statusText}`);
-    }
+  // Extract the JSON error message sent by FastAPI ("No dog detected...")
+  const errorData = await aiResponse.json();
+  
+  // Forward the exact 400 status and message back to Vercel
+  return res.status(aiResponse.status).json({ 
+    error: errorData.detail || "Verification failed." 
+  });
+}
 
     const aiData = await aiResponse.json();
     const { biometric_id, status, confidence_score } = aiData;

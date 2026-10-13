@@ -170,16 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(stepTimer1);
       clearTimeout(stepTimer2);
 
+      // If the backend returns a 400 or 500 error, read the custom message
       if (!response.ok) {
-        throw new Error(`Server returned HTTP ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.error || `Server returned HTTP ${response.status}`;
+        throw new Error(errorMessage);
       }
 
       const resData = await response.json();
       renderResults(resData);
+      
     } catch (err) {
       clearTimeout(stepTimer1);
       clearTimeout(stepTimer2);
-      alert(`Pipeline error: ${err.message}. Check that the Node (port 5000) and Python (port 8000) servers are running.`);
+      
+      // Display the specific rejection message ("No dog detected...")
+      alert(err.message); 
+      
       scanPanel.style.display = 'none';
       uploadPanel.style.display = 'block';
     }
